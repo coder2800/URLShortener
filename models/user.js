@@ -1,21 +1,20 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
-const urlSchema = new mongoose.Schema({
-    shortId: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    redirectUrl: {
+const userSchema = new mongoose.Schema({
+    Name: {
         type: String,
         required: true
     },
-    visitHistory: [{
-        timestamps: Number
-    }]
-},
-    { timestamps: true }
-)
-const URL = mongoose.model("url", urlSchema);
+    Email: {
+        type: String,
+        required: true
+    },
+    Password: {
+        type: String,
+        required: true
+    }
+})
 
-module.exports = URL;
+const USER = mongoose.model("user", userSchema);
+
+module.exports = USER;
