@@ -3,18 +3,20 @@ const shortId = require("shortid");
 
 const createUrl = async (req, res) => {
   const body = req.body;
-  if (!body.url) return res.status(400).json("URL is not present");
+  if (!body.url) return res.status(400).render("error", {
+      errorMessage: "URL is not present"
+  });
   const url = body.url;
   const shortid = shortId();
   const urlObj = await URL.create({
     shortId: shortid,
     redirectUrl: url,
     visitHistory: [],
+    createdBy: req.user._id
   });
   return res.render("home", {
     id: shortid,
   });
-  // return res.json({shortid: shortid});
 };
 
 const getUrl = async (req, res) => {
@@ -31,20 +33,34 @@ const getUrl = async (req, res) => {
           },
         },
       }
-    );
-    res.redirect(url.redirectUrl);
+      );
+      if (!url) {
+          return res.render("error", {
+              errorMessage: "Either the short URL is not valid or the URL for which this short URL has been generated is incorrect"
+          });
+    }
+    return res.redirect(url.redirectUrl);
   } catch (err) {
     console.log(err);
   }
 };
 
 const getAnalytics = async (req, res) => {
-  const id = req.params.shortId;
-  const url = await URL.findOne({
-    shortId: id,
-  });
-  console.log(url);
-  return res.json({ visits: url.visitHistory.length });
+    const id = req.params.shortId;
+    const url = await URL.findOne({
+      shortId: id,
+      createdBy: req.user._id
+    });
+    if (!url) {
+        return res.status(400).render("error", {
+            errorMessage: "URL not found"
+        })
+    }
+    return res.render("analytics", {
+        GeneratedUrl: url.shortId,
+        OriginalURL: url.redirectUrl,
+        visits: url.visitHistory.length
+    });
 };
 
 module.exports = {

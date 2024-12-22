@@ -12,6 +12,31 @@
             align-items: center;
             flex-direction: column;
             padding: 10px;
+            background-color: black;
+            color: white;
+        }
+        button, input{
+            padding: 10px;
+            border-radius: 10px;
+            border: 3px solid white;
+            background-color: black;
+            color: white;
+        }
+        button:hover{
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+        input{
+            width:50vw;
+        }
+        th, td {
+            border: 1px solid white; 
+            padding: 8px;
+            text-align: left;
+            border-radius: 5px;
+        }
+        table{
+            width: 95vw;
         }
     </style>
 </head>
@@ -25,7 +50,10 @@
         </form>
     </div> 
     <% if (locals.id) { %>
-     <div><%= id %></div>
+        <div>
+            Boom! Your link is live and kicking at 
+            <a href="http://localhost:8001/url/<%= id %>">http://localhost:8001/url/<%= id %></a>
+          </div>
     <% } %>
     <% if (locals.urls) { %>
     <table>

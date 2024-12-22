@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid white;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>URL visit analytics</h1>
+    <table>
+        <tr>
+            <th>Generated URL</th>
+            <td><%= GeneratedUrl %></td>
+        </tr>
+        <tr>
+            <th>Original URL</th>
+            <td><%= OriginalURL %></td>
+        </tr>
+        <tr>
+            <th>Total Visits</th>
+            <td><%= visits %></td>
+        </tr>
+    </table>
+</body>
+</html>

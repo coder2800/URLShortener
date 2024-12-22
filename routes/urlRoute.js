@@ -9,8 +9,8 @@ const URL = require("../models/url");
 
 router.post("/", createUrl);
 
-router.get("/:shortId", getUrl);
-
 router.get("/analytics/:shortId", getAnalytics);
+
+router.get("/:shortId", getUrl);
 
 module.exports = router;
