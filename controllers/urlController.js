@@ -8,11 +8,13 @@ const createUrl = async (req, res) => {
   });
   const url = body.url;
   const shortid = shortId();
+
+  console.log("Creating", req.user);
   const urlObj = await URL.create({
     shortId: shortid,
     redirectUrl: url,
     visitHistory: [],
-    createdBy: req.user._id
+    createdBy: req.user.id
   });
   return res.render("home", {
     id: shortid,
@@ -49,7 +51,7 @@ const getAnalytics = async (req, res) => {
     const id = req.params.shortId;
     const url = await URL.findOne({
       shortId: id,
-      createdBy: req.user._id
+      createdBy: req.user.id
     });
     if (!url) {
         return res.status(400).render("error", {

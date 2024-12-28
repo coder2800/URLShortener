@@ -8,7 +8,6 @@ async function authenticateUser(req, res, next) {
     //return to login page if user is not present in the cookies
     if (!getUser(userUID)) return res.redirect("/login");
     const user = getUser(userUID);
-
     req.user = user;
     next();
 }

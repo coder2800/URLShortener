@@ -1,12 +1,26 @@
-//simple basic hash map to store the UUIDs.
-const sessionIdToUserMap = new Map();
+require("dotenv").config();
+const jwt = require("jsonwebtoken")
 
-function setUser(id, user) {
-    sessionIdToUserMap.set(id, user);
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+
+function setUser(user) {
+    return jwt.sign(
+        {
+            id: user._id,
+            name: user.Name,
+            email: user.Email
+        },
+        JWT_SECRET_KEY
+    )
 }
 
-function getUser(id) {
-    return sessionIdToUserMap.get(id);
+function getUser(token) {
+    try {
+        return jwt.verify(token, JWT_SECRET_KEY);
+    }
+    catch {
+        return null;
+    }
 }
 
 module.exports = {

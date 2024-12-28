@@ -8,4 +8,5 @@
 ![](./architecture.drawio.svg)
 
 ## Notes - 
-1. UUID is used for generating unique session IDs for the successfully signed up or logged in users.
+1. Using stateless authentication instead of stateful authentication to prevent load on server and to reduce the failures due to server restart.
+2. Using JSON web tokens for authentication purposes. The secret has been stored in the .env file.

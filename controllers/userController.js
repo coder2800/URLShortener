@@ -1,4 +1,3 @@
-const { v4:uuidv4 } = require("uuid");
 const User = require("../models/user");
 const { setUser } = require("../service/auth");
 
@@ -18,10 +17,9 @@ const createUser = async (req, res) => {
         Email: email,
         Password: password
     })
-    const sessionId = uuidv4();
-    setUser(sessionId, user);
-    res.cookie('uid', sessionId);
-    res.render("success", {
+    const token = setUser(user);
+    res.cookie('uid', token);
+    return res.render("success", {
         message: "Wooho! User created successfully!"
     });
 }
@@ -34,15 +32,14 @@ const loginUser = async (req, res) => {
             message: "Oops! Email or Password is not present"
         })
     }
-    const user = User.findOne({ email, password });
+    const user = await User.findOne({ Email: email, Password: password });
     if (!user) {
         return res.render("error", {
             message: "Oops! Email or password is not correct"
         })
     }
-    const sessionId = uuidv4();
-    setUser(sessionId, user);
-    res.cookie('uid', sessionId);
+    const token = setUser(user);
+    res.cookie('uid', token);
     return res.render("success", {
         message: "Wooho! Login successful!"
     });
