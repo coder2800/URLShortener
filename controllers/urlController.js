@@ -48,11 +48,18 @@ const getUrl = async (req, res) => {
 };
 
 const getAnalytics = async (req, res) => {
-    const id = req.params.shortId;
-    const url = await URL.findOne({
+  const id = req.params.shortId;
+  let url;
+  if (req.user.role !== "admin") {
+    url = await URL.findOne({
       shortId: id,
       createdBy: req.user.id
     });
+  } else {
+    url = await URL.findOne({
+      shortId: id
+    });
+  }
     if (!url) {
         return res.status(400).render("error", {
             errorMessage: "URL not found"

@@ -8,7 +8,8 @@ function setUser(user) {
         {
             id: user._id,
             name: user.Name,
-            email: user.Email
+            email: user.Email,
+            role: user.Role
         },
         JWT_SECRET_KEY
     )

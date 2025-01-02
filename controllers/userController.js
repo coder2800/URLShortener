@@ -12,10 +12,12 @@ const createUser = async (req, res) => {
     const email = body.email;
     const password = body.password;
     const name = body.name;
+    const role = body.role || "normal";
     const user = await User.create({
         Name: name,
         Email: email,
-        Password: password
+        Password: password,
+        Role: role
     })
     const token = setUser(user);
     res.cookie('uid', token);
@@ -28,7 +30,7 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
     const {email, password} = req.body;
     if (!email || !password) {
-        return res.render("render", {
+        return res.render("error", {
             message: "Oops! Email or Password is not present"
         })
     }

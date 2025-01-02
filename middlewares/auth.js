@@ -12,6 +12,16 @@ async function authenticateUser(req, res, next) {
     next();
 }
 
+async function restrictToAdmin(req, res, next) {
+    if (req.user.role !== "admin") {
+        return res.status(403).json({
+            message: "You are not allowed to access this route"
+        });
+    }
+    next();
+}
+
 module.exports = {
+    restrictToAdmin,
     authenticateUser
 }
