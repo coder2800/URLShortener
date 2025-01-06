@@ -16,11 +16,13 @@ const createUser = async (req, res) => {
         const password = body.password;
         const name = body.name;
         const role = body.role || "normal";
+        const ProfilePhoto = "";
         const user = await User.create({
             Name: name,
             Email: email,
             Password: password,
-            Role: role
+            Role: role,
+            ProfilePhoto: ProfilePhoto
         })
         const token = setUser(user);
         res.cookie('uid', token);

@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: "normal" // normal, admin
     },
+    ProfilePhoto: {
+        type: String,
+        default: ""
+    }
 })
 
 const USER = mongoose.model("user", userSchema);
