@@ -9,20 +9,20 @@ const createUser = async (req, res) => {
         console.log(body);
         if (!body.email || !body.password || !body.name) {
             return res.render("error", {
-                errorMessage: "Name or Email or password is not present"
+                errorMessage: "Name or Email or Password is not present"
             })
         }
         const email = body.email;
         const password = body.password;
         const name = body.name;
         const role = body.role || "normal";
-        const ProfilePhoto = "";
+        const profilePhotoPath = req.file ? req.file.path : "";
         const user = await User.create({
             Name: name,
             Email: email,
             Password: password,
             Role: role,
-            ProfilePhoto: ProfilePhoto
+            ProfilePhoto: profilePhotoPath
         })
         const token = setUser(user);
         res.cookie('uid', token);
